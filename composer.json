@@ -2,7 +2,10 @@
     "name": "hellpat/enum",
     "description": "Provides simple Enums. Fully typed and comparable.",
     "type": "library",
-    "require": {},
+    "require": {
+        "php": "^7.2",
+        "roave/you-are-using-it-wrong": "^1.5"
+    },
     "require-dev": {
         "vimeo/psalm": "^3.15",
         "phpunit/phpunit": "^9.3",
@@ -13,8 +16,9 @@
         "psr-4": {"HellPat\\Enum\\": "src/"}
     },
     "scripts": {
-        "test": "phpcs && psalm",
-        "fix": "phpcbf"
+        "test": "phpcs && psalm --find-dead-code",
+        "fix": "phpcbf",
+        "update:baseline": "psalm --update-baseline"
     },
     "license": "MIT",
     "authors": [

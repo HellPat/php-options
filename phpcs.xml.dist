@@ -14,4 +14,16 @@
 
     <!-- Include full Doctrine Coding Standard -->
     <rule ref="Doctrine"/>
+
+    <rule ref="PSR1.Methods.CamelCapsMethodName.NotCamelCaps">
+        <exclude-pattern>src/</exclude-pattern>
+    </rule>
+
+    <rule ref="Squiz.Scope.MethodScope.Missing">
+        <exclude-pattern>src/</exclude-pattern>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint">
+        <exclude-pattern>src/</exclude-pattern>
+    </rule>
 </ruleset>
