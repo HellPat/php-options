@@ -12,12 +12,19 @@ final class TaxStub
 {
     use EnumBehaviour;
 
+    /** @var TaxSettingsStub|null */
+    public static $germanSettings;
+
     /**
      * @return static
      */
     public static function GERMANY()
     {
-        return self::choice(new TaxSettingsStub(19));
+        if (self::$germanSettings === null) {
+            self::$germanSettings = new TaxSettingsStub(19);
+        }
+
+        return self::choice(self::$germanSettings);
     }
 
     /**

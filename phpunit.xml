@@ -21,4 +21,5 @@
             <directory>./src/**/*Test.php</directory>
         </exclude>
     </coverage>
+
 </phpunit>

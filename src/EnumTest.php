@@ -96,4 +96,14 @@ final class EnumTest extends TestCase
 
         clone EnumStub::SUCCESS();
     }
+
+    /**
+     * @test
+     */
+    function prevent_mutating_values(): void
+    {
+        $germany = TaxStub::GERMANY();
+
+        self::assertNotSame(TaxStub::$germanSettings, $germany->settings());
+    }
 }
