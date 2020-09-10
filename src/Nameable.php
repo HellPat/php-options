@@ -6,7 +6,7 @@ namespace HellPat\Enum;
 
 use function assert;
 
-trait StringableEnum
+trait Nameable
 {
     final public function toString(): string
     {

@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HellPat\Enum;
+namespace HellPat\Enum\Stubs;
+
+use HellPat\Enum\Enum;
 
 class EnumStub extends Enum
 {
@@ -16,7 +18,7 @@ class EnumStub extends Enum
      */
     public static function SUCCESS()
     {
-        return self::enum();
+        return self::choice();
     }
 
     /**
@@ -27,7 +29,7 @@ class EnumStub extends Enum
      */
     public static function FAILURE()
     {
-        return self::enum();
+        return self::choice();
     }
 
     /**
@@ -35,7 +37,7 @@ class EnumStub extends Enum
      */
     public static function camelFailure()
     {
-        return self::enum();
+        return self::choice();
     }
 
     /**
@@ -43,6 +45,14 @@ class EnumStub extends Enum
      */
     public static function small_snake_failure()
     {
-        return self::enum();
+        return self::choice();
+    }
+
+    /**
+     * @return static
+     */
+    public static function INVALID_VALUE()
+    {
+        return self::choice('wrong');
     }
 }

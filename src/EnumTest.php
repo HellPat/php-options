@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace HellPat\Enum;
 
+use HellPat\Enum\Stubs\EnumStub;
+use HellPat\Enum\Stubs\ExtendingEnumStub;
+use HellPat\Enum\Stubs\TaxSettingsStub;
+use HellPat\Enum\Stubs\TaxStub;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -58,5 +62,38 @@ final class EnumTest extends TestCase
         self::assertSame(EnumStub::SUCCESS(), EnumStub::fromString('SUCCESS'));
         self::assertSame(EnumStub::SUCCESS(), ExtendingEnumStub::fromString('SUCCESS'));
         self::assertSame(ExtendingEnumStub::SUCCESS(), ExtendingEnumStub::fromString('SUCCESS'));
+    }
+
+    /**
+     * @test
+     */
+    function can_hold_a_value(): void
+    {
+        $germany = TaxStub::GERMANY();
+        $cayman  = TaxStub::CAYMAN_ISLANDS();
+
+        self::assertSame(TaxStub::GERMANY(), $germany);
+        self::assertEquals(new TaxSettingsStub(19), $germany->settings());
+        self::assertEquals(new TaxSettingsStub(0), $cayman->settings());
+    }
+
+    /**
+     * @test
+     */
+    function throws_on_invalid_value(): void
+    {
+        $this->expectExceptionObject(InvalidValue::definitionMissing());
+
+        EnumStub::INVALID_VALUE();
+    }
+
+    /**
+     * @test
+     */
+    function prevents_cloning(): void
+    {
+        $this->expectExceptionObject(CloningNotAllowed::useNewInstanceInstead());
+
+        clone EnumStub::SUCCESS();
     }
 }

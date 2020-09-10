@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HellPat\Enum;
+namespace HellPat\Enum\Stubs;
 
 final class ExtendingEnumStub extends EnumStub
 {
@@ -11,7 +11,7 @@ final class ExtendingEnumStub extends EnumStub
      */
     public static function THE_LIMBUS()
     {
-        return self::enum();
+        return self::choice();
     }
 
     /**
@@ -19,6 +19,6 @@ final class ExtendingEnumStub extends EnumStub
      */
     public static function SUCCESS()
     {
-        return self::enum();
+        return self::choice();
     }
 }

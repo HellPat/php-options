@@ -7,5 +7,5 @@ namespace HellPat\Enum;
 abstract class Enum
 {
     use EnumBehaviour;
-    use StringableEnum;
+    use Nameable;
 }

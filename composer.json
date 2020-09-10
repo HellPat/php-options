@@ -18,7 +18,7 @@
     "scripts": {
         "test": "phpcs && psalm --find-dead-code",
         "fix": "phpcbf",
-        "update:baseline": "psalm --update-baseline"
+        "update:baseline": "psalm --set-baseline=psalm-baseline.xml"
     },
     "license": "MIT",
     "authors": [
