@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace HellPat\Enum\Stubs;
 
-final class ExtendingEnumStub extends EnumStub
+final class ExtendingOptionStub extends OptionStub
 {
     /**
      * @return static
      */
     public static function THE_LIMBUS()
     {
-        return self::choice();
+        return self::createFromMethodName();
     }
 
     /**
@@ -19,6 +19,6 @@ final class ExtendingEnumStub extends EnumStub
      */
     public static function SUCCESS()
     {
-        return self::choice();
+        return self::createFromMethodName();
     }
 }

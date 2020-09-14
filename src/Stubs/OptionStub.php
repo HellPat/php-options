@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HellPat\Enum\Stubs;
 
-use HellPat\Enum\Enum;
+use HellPat\Enum\Option;
 
-class EnumStub extends Enum
+class OptionStub extends Option
 {
     /**
      * When an Enum is only internat to the Application there
@@ -18,7 +18,7 @@ class EnumStub extends Enum
      */
     public static function SUCCESS()
     {
-        return self::choice();
+        return self::createFromMethodName();
     }
 
     /**
@@ -29,7 +29,7 @@ class EnumStub extends Enum
      */
     public static function FAILURE()
     {
-        return self::choice();
+        return self::createFromMethodName();
     }
 
     /**
@@ -37,7 +37,7 @@ class EnumStub extends Enum
      */
     public static function camelFailure()
     {
-        return self::choice();
+        return self::createFromMethodName();
     }
 
     /**
@@ -45,14 +45,6 @@ class EnumStub extends Enum
      */
     public static function small_snake_failure()
     {
-        return self::choice();
-    }
-
-    /**
-     * @return static
-     */
-    public static function INVALID_VALUE()
-    {
-        return self::choice('wrong');
+        return self::createFromMethodName();
     }
 }
