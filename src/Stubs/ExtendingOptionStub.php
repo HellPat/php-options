@@ -14,7 +14,7 @@ final class ExtendingOptionStub extends OptionStub
      */
     public static function THE_LIMBUS()
     {
-        return self::createFromMethodName();
+        return self::getInstance(__METHOD__);
     }
 
     /**
@@ -22,6 +22,6 @@ final class ExtendingOptionStub extends OptionStub
      */
     public static function SUCCESS()
     {
-        return self::createFromMethodName();
+        return self::getInstance(__METHOD__);
     }
 }

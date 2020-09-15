@@ -47,11 +47,14 @@ final class OptionTest extends TestCase
      */
     function it_has_a_string_representation(): void
     {
-        self::assertSame('SUCCESS', OptionStub::SUCCESS()->toString());
-        self::assertSame('FAILURE', OptionStub::FAILURE()->toString());
-        self::assertSame('camelFailure', OptionStub::camelFailure()->toString());
-        self::assertSame('small_snake_failure', OptionStub::small_snake_failure()->toString());
-        self::assertSame('SUCCESS', ExtendingOptionStub::SUCCESS()->toString());
+        self::assertSame('HellPat\Enum\Stubs\OptionStub::SUCCESS', OptionStub::SUCCESS()->toString());
+        self::assertSame('HellPat\Enum\Stubs\OptionStub::FAILURE', OptionStub::FAILURE()->toString());
+        self::assertSame('HellPat\Enum\Stubs\OptionStub::camelFailure', OptionStub::camelFailure()->toString());
+        self::assertSame(
+            'HellPat\Enum\Stubs\OptionStub::small_snake_failure',
+            OptionStub::small_snake_failure()->toString()
+        );
+        self::assertSame('HellPat\Enum\Stubs\ExtendingOptionStub::SUCCESS', ExtendingOptionStub::SUCCESS()->toString());
     }
 
     /**
@@ -69,10 +72,18 @@ final class OptionTest extends TestCase
      */
     function allows_more_details(): void
     {
-        self::assertSame(SettingsStub::GERMANY(), SettingsStub::GERMANY());
-        self::assertSame(SettingsStub::GERMANY()->details(), SettingsStub::GERMANY()->details());
-        self::assertSame(SettingsStub::AUSTRIA(), SettingsStub::AUSTRIA());
-        self::assertNotSame(SettingsStub::GERMANY(), SettingsStub::AUSTRIA());
-        self::assertNotEquals(SettingsStub::GERMANY(), SettingsStub::AUSTRIA());
+        self::assertSame(SettingsStub::ORIGINAL(), SettingsStub::ORIGINAL());
+        self::assertSame(SettingsStub::ORIGINAL()->details(), SettingsStub::ORIGINAL()->details());
+    }
+
+    /**
+     * @test
+     */
+    function it_throws_on_invalid_register(): void
+    {
+        $this->expectExceptionObject(InvalidOption::sameNameButNotEqual());
+
+        SettingsStub::SAME_NAME_BUT_DIFFERENT_VALUE_THEN_ORIGINAL();
+        SettingsStub::ORIGINAL();
     }
 }

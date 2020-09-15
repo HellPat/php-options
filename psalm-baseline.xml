@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="3.15@de6e7f324f44dde540ebe7ebd4eb481b97c86f30">
   <file src="src/Option.php">
-    <UnsafeInstantiation occurrences="1">
-      <code>new static(self::nameFromBackTrace())</code>
+    <MissingParamType occurrences="2">
+      <code>$args</code>
+      <code>$constructorArguments</code>
+    </MissingParamType>
+    <UnsafeInstantiation occurrences="2">
+      <code>new static($name, ...$constructorArguments)</code>
+      <code>new static($name)</code>
     </UnsafeInstantiation>
   </file>
   <file src="src/OptionTest.php">

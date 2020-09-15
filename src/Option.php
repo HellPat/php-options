@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace HellPat\Enum;
 
 use function assert;
-use function debug_backtrace;
-use function is_string;
 
 /**
  * @psalm-immutable
@@ -19,39 +17,41 @@ abstract class Option
     /** @var string */
     private $optionId;
 
-    protected function __construct(string $name)
+    /**
+     * @param mixed ...$args
+     */
+    protected function __construct(string $name, ...$args)
     {
         $this->optionId = $name;
     }
 
     /**
+     * @param mixed ...$constructorArguments
+     *
      * @return static
      */
-    final protected static function createFromMethodName()
+    final protected static function getInstance(string $name, ...$constructorArguments)
     {
-        return self::register(new static(self::nameFromBackTrace()));
-    }
+        if ($constructorArguments !== []) {
+            return self::register(new static($name, ...$constructorArguments));
+        }
 
-    final protected static function nameFromBackTrace(): string
-    {
-        $name = debug_backtrace()[2]['function'];
-        assert(is_string($name));
-
-        return $name;
+        return self::register(new static($name));
     }
 
     /**
      * @return static
      */
-    final protected static function register(Option $option)
+    final private static function register(Option $option)
     {
         assert($option->optionId !== '');
 
-        if (
-            isset(self::$enumRegistry[$option->optionId])
-            // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
-            && self::$enumRegistry[$option->optionId] == $option
-        ) {
+        if (isset(self::$enumRegistry[$option->optionId])) {
+            //phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
+            if (self::$enumRegistry[$option->optionId] != $option) {
+                throw InvalidOption::sameNameButNotEqual();
+            }
+
             return self::$enumRegistry[$option->optionId];
         }
 

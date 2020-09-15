@@ -21,7 +21,7 @@ class OptionStub extends Option
      */
     public static function SUCCESS()
     {
-        return self::createFromMethodName();
+        return self::getInstance(__METHOD__);
     }
 
     /**
@@ -32,7 +32,7 @@ class OptionStub extends Option
      */
     public static function FAILURE()
     {
-        return self::createFromMethodName();
+        return self::getInstance(__METHOD__);
     }
 
     /**
@@ -40,7 +40,7 @@ class OptionStub extends Option
      */
     public static function camelFailure()
     {
-        return self::createFromMethodName();
+        return self::getInstance(__METHOD__);
     }
 
     /**
@@ -48,6 +48,6 @@ class OptionStub extends Option
      */
     public static function small_snake_failure()
     {
-        return self::createFromMethodName();
+        return self::getInstance(__METHOD__);
     }
 }

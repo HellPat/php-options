@@ -15,26 +15,26 @@ final class SettingsStub extends Option
     /** @var object */
     private $details;
 
-    private function __construct(string $name, object $details)
+    protected function __construct(string $name, object $details)
     {
         parent::__construct($name);
         $this->details = $details;
     }
 
-    public static function GERMANY(): self
+    public static function ORIGINAL(): self
     {
         $options     = new stdClass();
         $options->id = 'GERMANY';
 
-        return self::register(new self(self::nameFromBackTrace(), $options));
+        return self::getInstance('original', $options);
     }
 
-    public static function AUSTRIA(): self
+    public static function SAME_NAME_BUT_DIFFERENT_VALUE_THEN_ORIGINAL(): self
     {
         $options     = new stdClass();
         $options->id = 'AUSTRIA';
 
-        return self::register(new self('GERMANY', $options));
+        return self::getInstance('original', $options);
     }
 
     public function details(): object
