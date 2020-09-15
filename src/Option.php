@@ -16,12 +16,10 @@ abstract class Option
     /** @var array<string, self> */
     private static $enumRegistry = [];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $optionId;
 
-    private function __construct(string $name)
+    protected function __construct(string $name)
     {
         $this->optionId = $name;
     }
@@ -34,39 +32,41 @@ abstract class Option
         return self::register(new static(self::nameFromBackTrace()));
     }
 
-    private static function nameFromBackTrace(): string
+    final protected static function nameFromBackTrace(): string
     {
-        return debug_backtrace()[2]['function'];
-    }
-
-    private static function register(Option $option): Option
-    {
-        $name = $option->optionId();
-
+        $name = debug_backtrace()[2]['function'];
         assert(is_string($name));
-        assert($name !== '');
 
-        return self::$enumRegistry[$name]
-            ?? self::$enumRegistry[$name] = $option;
+        return $name;
     }
 
-    final public function optionId(): string
+    /**
+     * @return static
+     */
+    final protected static function register(Option $option)
     {
-        return $this->optionId;
-    }
+        assert($option->optionId !== '');
 
-    final public static function fromOptionId(string $name): self
-    {
-        assert($name !== '');
+        if (
+            isset(self::$enumRegistry[$option->optionId])
+            // phpcs:ignore SlevomatCodingStandard.Operators.DisallowEqualOperators.DisallowedEqualOperator
+            && self::$enumRegistry[$option->optionId] == $option
+        ) {
+            return self::$enumRegistry[$option->optionId];
+        }
 
-        $instance = static::$name();
-        assert($instance instanceof self);
+        self::$enumRegistry[$option->optionId] = $option;
 
-        return $instance;
+        return $option;
     }
 
     public function __clone()
     {
         throw CloningNotAllowed::useNewInstanceInstead();
+    }
+
+    public function toString(): string
+    {
+        return $this->optionId;
     }
 }

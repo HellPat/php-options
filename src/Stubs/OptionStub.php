@@ -6,6 +6,9 @@ namespace HellPat\Enum\Stubs;
 
 use HellPat\Enum\Option;
 
+/**
+ * @psalm-immutable
+ */
 class OptionStub extends Option
 {
     /**

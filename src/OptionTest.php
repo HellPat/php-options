@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace HellPat\Enum;
 
-use HellPat\Enum\Stubs\OptionStub;
 use HellPat\Enum\Stubs\ExtendingOptionStub;
+use HellPat\Enum\Stubs\OptionStub;
+use HellPat\Enum\Stubs\SettingsStub;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -35,9 +36,9 @@ final class OptionTest extends TestCase
     /**
      * @test
      */
-    function overwritten_constructors_still_equal(): void
+    function overwritten_constructors_equals_on_same_class_only(): void
     {
-        self::assertSame(OptionStub::SUCCESS(), ExtendingOptionStub::SUCCESS());
+        self::assertNotSame(OptionStub::SUCCESS(), ExtendingOptionStub::SUCCESS());
         self::assertSame(ExtendingOptionStub::SUCCESS(), ExtendingOptionStub::SUCCESS());
     }
 
@@ -46,21 +47,11 @@ final class OptionTest extends TestCase
      */
     function it_has_a_string_representation(): void
     {
-        self::assertSame('SUCCESS', OptionStub::SUCCESS()->optionId());
-        self::assertSame('FAILURE', OptionStub::FAILURE()->optionId());
-        self::assertSame('camelFailure', OptionStub::camelFailure()->optionId());
-        self::assertSame('small_snake_failure', OptionStub::small_snake_failure()->optionId());
-        self::assertSame('SUCCESS', ExtendingOptionStub::SUCCESS()->optionId());
-    }
-
-    /**
-     * @test
-     */
-    function it_can_be_reconstructed_by_name(): void
-    {
-        self::assertSame(OptionStub::SUCCESS(), OptionStub::fromOptionId('SUCCESS'));
-        self::assertSame(OptionStub::SUCCESS(), ExtendingOptionStub::fromOptionId('SUCCESS'));
-        self::assertSame(ExtendingOptionStub::SUCCESS(), ExtendingOptionStub::fromOptionId('SUCCESS'));
+        self::assertSame('SUCCESS', OptionStub::SUCCESS()->toString());
+        self::assertSame('FAILURE', OptionStub::FAILURE()->toString());
+        self::assertSame('camelFailure', OptionStub::camelFailure()->toString());
+        self::assertSame('small_snake_failure', OptionStub::small_snake_failure()->toString());
+        self::assertSame('SUCCESS', ExtendingOptionStub::SUCCESS()->toString());
     }
 
     /**
@@ -71,5 +62,17 @@ final class OptionTest extends TestCase
         $this->expectExceptionObject(CloningNotAllowed::useNewInstanceInstead());
 
         clone OptionStub::SUCCESS();
+    }
+
+    /**
+     * @test
+     */
+    function allows_more_details(): void
+    {
+        self::assertSame(SettingsStub::GERMANY(), SettingsStub::GERMANY());
+        self::assertSame(SettingsStub::GERMANY()->details(), SettingsStub::GERMANY()->details());
+        self::assertSame(SettingsStub::AUSTRIA(), SettingsStub::AUSTRIA());
+        self::assertNotSame(SettingsStub::GERMANY(), SettingsStub::AUSTRIA());
+        self::assertNotEquals(SettingsStub::GERMANY(), SettingsStub::AUSTRIA());
     }
 }

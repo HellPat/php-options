@@ -16,7 +16,7 @@
         "psr-4": {"HellPat\\Enum\\": "src/"}
     },
     "scripts": {
-        "test": "phpcs && psalm --find-dead-code && php infection.phar --min-msi=88",
+        "test": "psalm --find-dead-code && php infection.phar --min-msi=100",
         "fix": "phpcbf",
         "update:baseline": "psalm --set-baseline=psalm-baseline.xml"
     },
