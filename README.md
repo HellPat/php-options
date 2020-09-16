@@ -4,15 +4,74 @@ Finite Options as objects in PHP.
 
 ## Motivation
 
-tbd.
+### Option validity & Type-safety
 
-### Type safety
+When you use an `integer` or a `string` to change the featureset of your class/method you
+have to protect you from passing in wrong arguments.
 
-By representing your Options as Object, you can use Type-Declarations
-and enforce strict types.
+e.g. (from Symfony https://github.com/symfony/symfony/blob/master/src/Symfony/Component/HttpKernel/Event/KernelEvent.php)
 
-String-Options can be replaced with options - now it's impossible to pass in
-invalid options. Using strings didn't validate that for us.
+```php
+/**
+ * @param int $requestType The request type the kernel is currently processing; one of
+ *                         HttpKernelInterface::MASTER_REQUEST or HttpKernelInterface::SUB_REQUEST
+ */
+public function __construct(HttpKernelInterface $kernel, Request $request, ?int $requestType)
+{
+    $this->kernel = $kernel;
+    $this->request = $request;
+    $this->requestType = $requestType;
+}
+
+/**
+ * Returns the request type the kernel is currently processing.
+ *
+ * @return int One of HttpKernelInterface::MASTER_REQUEST and
+ *             HttpKernelInterface::SUB_REQUEST
+ */
+public function getRequestType()
+{
+    return $this->requestType;
+}
+```
+
+The usage of constants make it more comfortable and typo safe for the developer.
+But everyone knows that one person that just passes in `int = 3`.
+
+This should throw an Exception. But do you really want to care about that?
+Enum for the Rescue. Invalid Options are permitted *at construction*.
+It's not possible to *make* an invalid option.
+
+And then the type-declaration enforces validity!
+
+Here a more type-safe example.
+
+```diff
+/**
+- * @param int $requestType The request type the kernel is currently processing; one of
+- *                         HttpKernelInterface::MASTER_REQUEST or HttpKernelInterface::SUB_REQUEST
+ */
+-public function __construct(HttpKernelInterface $kernel, Request $request, ?int $requestType)
++public function __construct(HttpKernelInterface $kernel, Request $request, RequestType $requestType)
+{
+    $this->kernel = $kernel;
+    $this->request = $request;
+    $this->requestType = $requestType;
+}
+
+/**
+ * Returns the request type the kernel is currently processing.
+- *
+- * @return int One of HttpKernelInterface::MASTER_REQUEST and
+- *             HttpKernelInterface::SUB_REQUEST
+ */
++public function getRequestType(): RequestType
+{
+    return $this->requestType;
+}
+```
+
+An other example using colors:
 
 ```diff
 class Mixer {
@@ -48,16 +107,12 @@ tbd.
 Other libraries have been released way earlier, are more stable and used.
 In fact I'd never think auf Enums in PHP without there existence. Kudos to all of you.
 
-### https://github.com/myclabs/php-enum
+- https://github.com/myclabs/php-enum
+- https://www.php.net/manual/de/class.splenum.php
+- https://github.com/spatie/enum
+- https://github.com/DASPRiD/Enum
 
-tbd.
-
-### https://www.php.net/manual/de/class.splenum.php
-
-tbd.
-
-## Inspiration
+## Inspirational posts
 
 - https://beberlei.de/2009/08/31/enums-in-php.html
 - https://stitcher.io/blog/enums-without-enums
-- https://github.com/myclabs/php-enum
