@@ -105,7 +105,7 @@ tbd.
 ## Comparison with other libraries
 
 Other libraries have been released way earlier, are more stable and used.
-In fact I'd never think auf Enums in PHP without there existence. Kudos to all of you.
+In fact I'd never think of Enums in PHP without their existence. Kudos to all of you.
 
 - https://github.com/myclabs/php-enum
 - https://www.php.net/manual/de/class.splenum.php
